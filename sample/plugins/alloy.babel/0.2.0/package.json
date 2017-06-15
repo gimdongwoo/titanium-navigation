@@ -1,0 +1,136 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "alloy.babel",
+        "scope": null,
+        "escapedName": "alloy.babel",
+        "name": "alloy.babel",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/ingrowth/Documents/Projects/titanium-navigation/sample"
+    ]
+  ],
+  "_from": "alloy.babel@latest",
+  "_id": "alloy.babel@0.2.0",
+  "_inCache": true,
+  "_location": "/alloy.babel",
+  "_nodeVersion": "6.10.3",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/alloy.babel-0.2.0.tgz_1496784519684_0.4905956173315644"
+  },
+  "_npmUser": {
+    "name": "vladm3",
+    "email": "vlad.misyura@gmail.com"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "alloy.babel",
+    "scope": null,
+    "escapedName": "alloy.babel",
+    "name": "alloy.babel",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/alloy.babel/-/alloy.babel-0.2.0.tgz",
+  "_shasum": "b3babf9f3d8b5ae19750b53d065017376e7b5bb5",
+  "_shrinkwrap": null,
+  "_spec": "alloy.babel",
+  "_where": "/Users/ingrowth/Documents/Projects/titanium-navigation/sample",
+  "author": {
+    "name": "Vlad Misyura",
+    "email": "vlad.misyura@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/vladm3/alloy.babel/issues"
+  },
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "chokidar": "^1.7.0",
+    "fs-extra": "^3.0.1",
+    "klaw-sync": "^2.1.0",
+    "lodash": "^4.17.4",
+    "object-assign": "^4.1.1",
+    "pug": "^2.0.0-rc.2",
+    "replace-ext": "^1.0.0",
+    "stss": "^0.4.3"
+  },
+  "description": "Appcelerator Titanium plugin which enables ES6, Pug (Jade), STSS and LiveView support for Alloy projects",
+  "devDependencies": {
+    "eslint": "^3.19.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "b3babf9f3d8b5ae19750b53d065017376e7b5bb5",
+    "tarball": "https://registry.npmjs.org/alloy.babel/-/alloy.babel-0.2.0.tgz"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 6
+    },
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "rules": {
+      "indent": [
+        2,
+        2
+      ],
+      "quotes": [
+        2,
+        "single"
+      ],
+      "linebreak-style": [
+        2,
+        "unix"
+      ],
+      "semi": [
+        2,
+        "always"
+      ],
+      "no-console": [
+        0
+      ]
+    }
+  },
+  "gitHead": "f1a9d38ff5f040fa591e7854908c0573551d55e4",
+  "homepage": "https://github.com/vladm3/alloy.babel#readme",
+  "keywords": [
+    "appcelerator",
+    "titanium",
+    "titanium-alloy",
+    "alloy",
+    "babel",
+    "stss"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "vladm3",
+      "email": "vlad.misyura@gmail.com"
+    }
+  ],
+  "name": "alloy.babel",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladm3/alloy.babel.git"
+  },
+  "scripts": {
+    "postinstall": "node ./scripts/install.js",
+    "postupdate": "node ./scripts/install.js"
+  },
+  "version": "0.2.0"
+}

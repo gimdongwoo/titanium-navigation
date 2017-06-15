@@ -1,0 +1,14 @@
+{
+  "name": "titanium-navigation-sample",
+  "version": "1.0.0",
+  "description": "Welcome to your Appcelerator Titanium Mobile Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dongwoo Gim <gimdongwoo@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "alloy.babel": "^0.2.0"
+  }
+}
