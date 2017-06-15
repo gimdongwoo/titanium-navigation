@@ -1,7 +1,7 @@
 const a = 'test';
 
-var doClick = (e) => {
+var doClick = e => {
   alert($.label.text + a);
-}
+};
 
 $.index.open();

@@ -16,7 +16,6 @@
 	<ios>
 		<enable-launch-screen-storyboard>true</enable-launch-screen-storyboard>
 		<use-app-thinning>true</use-app-thinning>
-		<use-jscore-framework>true</use-jscore-framework>
 		<plist>
 			<dict>
 				<key>UISupportedInterfaceOrientations~iphone</key>
