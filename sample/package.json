@@ -9,6 +9,6 @@
   "author": "Dongwoo Gim <gimdongwoo@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "alloy.babel": "^0.2.0"
+    "alloy.babel": "gimdongwoo/alloy.babel#es2015"
   }
 }

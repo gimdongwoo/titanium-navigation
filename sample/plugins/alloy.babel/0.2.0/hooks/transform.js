@@ -142,7 +142,7 @@ class TransformPlugin extends BasePlugin {
   transformJs(filePath) {
     this.log(`Transforming JS with Babel ${filePath} -> ${filePath}`);
     return new Promise((resolve, reject) => {
-      babel.transformFile(filePath, (err, result) => {
+      babel.transformFile(filePath, this.getBabelOptions(), (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -170,6 +170,12 @@ class TransformPlugin extends BasePlugin {
     }))
       .then(tss => fs.outputFile(tssFilePath, tss))
       .then(() => fs.remove(filePath));
+  }
+
+  getBabelOptions() {
+    return {
+      presets: ['es2015'],
+    };
   }
 }
 
