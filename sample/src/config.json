@@ -8,5 +8,7 @@
 	"os:ios": {},
 	"os:mobileweb": {},
 	"os:windows": {},
-	"dependencies": {}
+	"dependencies": {
+		"titanium.navigation": "1.0.0"
+	}
 }

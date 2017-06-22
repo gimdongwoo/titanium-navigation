@@ -61,7 +61,6 @@
 	</deployment-targets>
 	<sdk-version>6.1.0.GA</sdk-version>
 <plugins>
-	<plugin version="0.2.0">alloy.babel</plugin>
 	<plugin version="1.0">ti.alloy</plugin>
 </plugins>
 </ti:app>

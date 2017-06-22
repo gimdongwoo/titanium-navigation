@@ -1,0 +1,6 @@
+build/
+plugins/
+modules/
+Resources/
+assets/
+Gruntfile.js
