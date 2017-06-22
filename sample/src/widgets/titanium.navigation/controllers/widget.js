@@ -1,11 +1,15 @@
-const CONFIG = arguments[0] || {};
+let CONFIG;
 
-$.init = function (args) {
-  console.log('widget init');
+$.init = (args) => {
+  CONFIG = args || {};
+  console.log('widget init', CONFIG);
 };
 
-$.StackNavigator = function (args) {
-  console.log('StackNavigator', args);
+$.StackNavigator = (args) => {
+  const stackNavigator = Widget.createController('stack', args);
+  stackNavigator.openMain();
+
+  return stackNavigator;
 };
 
-$.init(CONFIG);
+$.init(arguments[0]);
