@@ -1,15 +1,15 @@
-let CONFIG;
+const STATE = {};
 
-$.init = (args) => {
-  CONFIG = args || {};
-  console.log('widget init', CONFIG);
-};
+function init(args) {
+  STATE.args = args || {};
+  console.log('widget init', STATE);
+}
 
-$.StackNavigator = (args) => {
-  const stackNavigator = Widget.createController('stack', args);
-  stackNavigator.openMain();
-
+function StackNavigator(routes, config) {
+  const stackNavigator = Widget.createController('stack', { routes, config });
   return stackNavigator;
-};
+}
 
-$.init(arguments[0]);
+exports.StackNavigator = StackNavigator;
+
+init(arguments[0]);

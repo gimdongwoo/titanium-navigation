@@ -1,8 +1,10 @@
 // titanium build targets,
 var ti_args= {
-  iphone: ['-p','ios', '--device-id','7DF52193-9506-413E-8E42-5256693866AC'],
-  ipad: ['-p','ios', '--device-id','AEA1C712-3A95-4C9B-B1E2-60861731CD03'],
-  android: ['-p','android', '--device-id','Nexus_5_API_23'],
+  iphone: ['-p','ios', '--device-id','7DF52193-9506-413E-8E42-5256693866AC', '--dev.tiapp', '__ios__'],
+  ipad: ['-p','ios', '--device-id','AEA1C712-3A95-4C9B-B1E2-60861731CD03', '--dev.tiapp', '__ios__'],
+  android: ['-p','android', '--device-id','Nexus_5_API_23', '--dev.tiapp', '__android__'],
+  deviceios: ['-p','ios', '-T','device', '-V', '"sangseok lee (KE3C8STP7T)"', '-P', 'f63f8427-5301-4425-8921-194d5990627b', '--dev.tiapp', '__ios__'],
+  deviceand: ['-p','android', '-T','device', '--dev.tiapp', '__android__'],
   default: ['-p','ios']
 };
 
@@ -101,10 +103,10 @@ module.exports = function(grunt) {
         command: 'ti build -p ios -F <%= ios_family %> -T dist-adhoc -R "<%= ios_adhoc_name %>" -P "<%= ios_adhoc_profile %>"  -O ~/Desktop '
       },
       appstore: {
-        command: 'ti build -p ios -F <%= ios_family %> -T dist-appstore -R "<%= ios_appstore_name %>" -P "<%= ios_appstore_name %>"  -O ~/Desktop '
+        command: 'ti build -p ios -F <%= ios_family %> -T dist-appstore -R "<%= ios_appstore_name %>" -P "<%= ios_appstore_profile %>"  -O ~/Desktop --dev.tiapp ios'
       },
       playstore: {
-        command: 'ti build -T dist-playstore -O ~/Desktop -p android -K <%= android_keystore %> - P <%= android_keypass %>'
+        command: 'ti build -T dist-playstore -O ~/Desktop -p android -K <%= android_keystore %> - P <%= android_keypass %> --dev.tiapp android'
       }
     },
     watch: {
@@ -120,11 +122,11 @@ module.exports = function(grunt) {
         tasks: ['stss']
       },
       javascripts: {
-        files: ['src/**/*.js', 'src/widgets/**/**/*.js'],
+        files: ['src/**/*.js'],
         tasks: ['babel']
       },
       assets: {
-        files: ['src/**', '!src/**/*.jade', '!src/**/*.stss', '!src/**/*.js', '!src/widgets/**/**/*.js'],
+        files: ['src/**/*.!(jade|stss|js)'],
         tasks: ['copy:alloy']
       }
     },
@@ -133,10 +135,10 @@ module.exports = function(grunt) {
         logConcurrentOutput: true,
       },
       run: {
-        tasks: ['tishadow:server','shell:appify','tishadow:run', 'watch:views','watch:styles', 'watch:javascripts', /*'watch:assets',*/ ]
+        tasks: ['tishadow:server','shell:appify','tishadow:run', 'watch:views','watch:styles', 'watch:javascripts', 'watch:assets']
       },
       spec: {
-        tasks: ['tishadow:server','shell:appify', 'tishadow:spec', 'watch:views','watch:styles', 'watch:javascripts', /*'watch:assets',*/ ]
+        tasks: ['tishadow:server','shell:appify', 'tishadow:spec', 'watch:views','watch:styles', 'watch:javascripts', 'watch:assets']
       }
     },
     copy: {
@@ -149,7 +151,8 @@ module.exports = function(grunt) {
           src: [
             '**',
             '!**/*.jade',
-            '!**/*.stss'
+            '!**/*.stss',
+            '!**/*.js'
           ]
         }
         ]

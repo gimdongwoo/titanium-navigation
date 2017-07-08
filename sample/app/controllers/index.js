@@ -8,4 +8,7 @@ var _Alloy$createWidget = Alloy.createWidget('titanium.navigation'),
 var BasicApp = StackNavigator({
   Main: { controller: 'basic/main' },
   Profile: { controller: 'basic/profile' }
+}, {
+  initialRouteName: 'Main'
 });
+BasicApp.open();

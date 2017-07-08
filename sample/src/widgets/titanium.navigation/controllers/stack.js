@@ -1,20 +1,23 @@
-let CONFIG = {};
 const STATE = {};
+const SCREEN = {};
 
-$.init = (args) => {
-  CONFIG = args || {};
-  console.log('StackNavigator init', CONFIG);
-};
+function init({ routes, config }) {
+  STATE.routes = routes;
+  STATE.config = config;
+  console.log('StackNavigator init', STATE);
+}
 
 function addNavbar(window, options) {
 }
 
 function createWindow(name) {
-  STATE[name] = {};
-  const screen = STATE[name];
-  const options = CONFIG[name].options || {};
+  const route = STATE.routes[name];
+  const options = route.options || {};
 
-  screen.controller = Alloy.createController(CONFIG[name].controller, options);
+  SCREEN[name] = {};
+  const screen = SCREEN[name];
+
+  screen.controller = Alloy.createController(route.controller, options);
 
   const firstView = screen.controller.getView();
   if (typeof firstView.open === 'function') {
@@ -37,14 +40,14 @@ function createWindow(name) {
 }
 
 function closeWindow(name) {
-  const screen = STATE[name];
+  const screen = SCREEN[name];
   if (typeof screen !== 'object') return;
 
   if (screen.view) screen.view.fireEvent('close'); // close event for $.getView.addEventListener(...);
   if (screen.window) screen.window.close();
 
   // null out
-  STATE[name] = null;
+  SCREEN[name] = null;
 }
 
 function openWindow(name) {
@@ -58,9 +61,10 @@ function openWindow(name) {
 }
 
 // exports
-exports.openMain = () => {
-  console.log('StackNavigator openMain');
-  openWindow('Main');
+exports.open = () => {
+  console.log('StackNavigator open');
+  const { initialRouteName } = STATE.config;
+  openWindow(initialRouteName || Object.keys(STATE.routes)[0]);
 };
 exports.navigate = (name) => {
   console.log('navigate :', name);
@@ -68,4 +72,4 @@ exports.navigate = (name) => {
   openWindow(name);
 };
 
-$.init(arguments[0]);
+init(arguments[0]);
