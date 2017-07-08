@@ -1,3 +1,9 @@
+".verticalView" : {
+  width: Ti.UI.SIZE,
+  height: Ti.UI.SIZE,
+  layout: "vertical"
+}
+
 ".label": {
   width: Ti.UI.SIZE,
   height: Ti.UI.SIZE,

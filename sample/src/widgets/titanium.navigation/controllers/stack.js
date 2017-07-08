@@ -6,6 +6,9 @@ const navigationProps = {
   navigation: {
     navigate(name) {
       return openWindow(name);
+    },
+    goBack() {
+      return closeWindow();
     }
   }
 };
@@ -20,6 +23,12 @@ function addNavbar(screen, route) {
   const { title = '', onHomeIconItemSelected = closeWindow } = screen.navigationOptions;
   let navBar;
 
+  // if (OS_IOS) {
+  //   const leftNavButton = $.UI.create('Button', { title: 'Back' });
+  //   leftNavButton.addEventListener('click', onHomeIconItemSelected);
+  //
+  //   screen.window.setLeftNavButton(leftNavButton);
+  // }
   if (OS_ANDROID) {
     const displayHomeAsUp = (SCREEN.length === 1) ? false : true;
     navBar = $.UI.create('ActionBar', { title, onHomeIconItemSelected, displayHomeAsUp });
