@@ -1,23 +1,47 @@
 const STATE = {};
-const SCREEN = {};
+const SCREEN = [];
+let topWindow;
+
+const navigationProps = {
+  navigation: {
+    navigate(name) {
+      return openWindow(name);
+    }
+  }
+};
 
 function init({ routes, config }) {
-  STATE.routes = routes;
-  STATE.config = config;
+  STATE.routes = routes || {};
+  STATE.config = config || {};
   console.log('StackNavigator init', STATE);
 }
 
-function addNavbar(window, options) {
+function addNavbar(screen, route) {
+  const { title = '', onHomeIconItemSelected = closeWindow } = screen.navigationOptions;
+  let navBar;
+
+  if (OS_ANDROID) {
+    const displayHomeAsUp = (SCREEN.length === 1) ? false : true;
+    navBar = $.UI.create('ActionBar', { title, onHomeIconItemSelected, displayHomeAsUp });
+    screen.window.add(navBar);
+  }
+
+  return navBar;
 }
 
 function createWindow(name) {
   const route = STATE.routes[name];
-  const options = route.options || {};
 
-  SCREEN[name] = {};
-  const screen = SCREEN[name];
+  SCREEN.push({});
+  const idx = SCREEN.length - 1;
+  const screen = SCREEN[idx];
 
-  screen.controller = Alloy.createController(route.controller, options);
+  const controllerOptions = {};
+  _.extend(controllerOptions, route.options, navigationProps);
+  screen.controller = Alloy.createController(route.controller, controllerOptions);
+
+  screen.navigationOptions = {};
+  _.extend(screen.navigationOptions, route.navigationOptions, screen.controller.navigationOptions);
 
   const firstView = screen.controller.getView();
   if (typeof firstView.open === 'function') {
@@ -25,38 +49,66 @@ function createWindow(name) {
     screen.window = firstView;
   } else {
     // view
-    screen.window = Ti.UI.createWindow({ navBarHidden: options.navBarHidden });
-    if (!options.navBarHidden) addNavbar(screen.window, options);
+    screen.window = $.UI.create('Window', {});
     screen.window.add(firstView);
     screen.view = firstView;
   }
 
+  // set window properties
+  screen.window.setTitle(screen.navigationOptions.title || '');
+
+  // navBar
+  const { navBarHidden = false } = screen.navigationOptions;
+  screen.window.setNavBarHidden(navBarHidden);
+  if (!navBarHidden) screen.navbar = addNavbar(screen, route);
+
   // closed event
-  screen.window.addEventListener('close', function () {
+  screen.window.addEventListener('close', function closeFn() {
+    screen.window.removeEventListener('close', closeFn);
+    console.log('window closed :', screen.window.title);
+
+    if (screen.view) screen.view.fireEvent('close'); // close event for $.getView.addEventListener(...);
+    SCREEN.pop();
     screen.controller.destroy();
   });
 
   return screen;
 }
 
-function closeWindow(name) {
-  const screen = SCREEN[name];
+function closeWindow() {
+  const idx = SCREEN.length - 1;
+  const screen = SCREEN[idx];
   if (typeof screen !== 'object') return;
 
-  if (screen.view) screen.view.fireEvent('close'); // close event for $.getView.addEventListener(...);
-  if (screen.window) screen.window.close();
+  if (OS_IOS && idx === 0 && topWindow) {
+    topWindow.close();
+    topWindow = null;
+    return;
+  }
 
-  // null out
-  SCREEN[name] = null;
+  if (screen.window) screen.window.close();
 }
 
 function openWindow(name) {
-  // closed before opened
-  closeWindow(name);
-
   // open
   const screen = createWindow(name);
-  screen.window.open();
+
+  console.log('window open :', screen.window.title);
+
+  if (OS_IOS) {
+    if (!topWindow) topWindow = $.UI.create('NavigationWindow', {});
+
+    if (SCREEN.length === 1) {
+      topWindow.window = screen.window;
+      topWindow.open();
+    } else {
+      topWindow.openWindow(screen.window);
+    }
+  }
+  if (OS_ANDROID) {
+    screen.window.open();
+  }
+
   if (screen.view) screen.view.fireEvent('open'); // open event for $.getView.addEventListener(...);
 }
 
