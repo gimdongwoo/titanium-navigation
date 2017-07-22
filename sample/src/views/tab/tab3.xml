@@ -1,0 +1,10 @@
+<Alloy>
+  <View>
+    <View class="verticalView">
+      <Label class="label">Tab3 Screen</Label>
+      <Button onClick="navigateTab1">Move Tab1</Button>
+      <Button onClick="navigateTab2">Move Tab2</Button>
+      <Button onClick="navigateTab3">Move Tab3</Button>
+    </View>
+  </View>
+</Alloy>

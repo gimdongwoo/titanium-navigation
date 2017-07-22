@@ -20,11 +20,11 @@ function init({ routes, config }) {
 }
 
 function addNavbar(screen, route) {
-  const { title = '', isCanClose, onClickBack } = screen.navigationOptions;
+  const { title = '', isCloseable, onClickBack } = screen.navigationOptions;
   let navBar;
 
   if (OS_IOS) {
-    if (isCanClose) {
+    if (isCloseable) {
       const leftNavButton = $.UI.create('Button', {
         title: 'Back'
       });
@@ -34,7 +34,7 @@ function addNavbar(screen, route) {
     }
   }
   if (OS_ANDROID) {
-    const displayHomeAsUp = (SCREEN.length > 1 || isCanClose) ? true : false;
+    const displayHomeAsUp = (SCREEN.length > 1 || isCloseable) ? true : false;
     navBar = $.UI.create('ActionBar', {
       title,
       onHomeIconItemSelected: onClickBack || closeWindow,
@@ -143,6 +143,7 @@ exports.open = () => {
 
   openWindow(initialRouteName || Object.keys(STATE.routes)[0]);
 };
+
 exports.navigate = (name) => {
   console.log('navigate :', name);
   if (!name) return;

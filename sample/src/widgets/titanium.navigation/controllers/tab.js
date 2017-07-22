@@ -1,14 +1,14 @@
 const STATE = {};
-const SCREEN = [];
-let topWindow;
+const TAB = {};
+let tabGroup;
 
 const navigationProps = {
   navigation: {
     navigate(name) {
-      return openWindow(name);
+      return setActiveTabByName(name);
     },
     goBack() {
-      return closeWindow();
+      return setActiveTabByName(STATE.prevTabName || STATE.nowTabName);
     }
   }
 };
@@ -20,26 +20,25 @@ function init({ routes, config }) {
 }
 
 function addNavbar(screen, route) {
-  const { title = '', isCanClose, onClickBack } = screen.navigationOptions;
+  const { title = '', isCloseable } = screen.navigationOptions;
   let navBar;
 
   if (OS_IOS) {
-    if (SCREEN.length > 1 || isCanClose) {
+    if (isCloseable) {
       const leftNavButton = $.UI.create('Button', {
         title: 'Back'
       });
-      leftNavButton.addEventListener('click', onClickBack || closeWindow);
+      leftNavButton.addEventListener('click', closeWindow);
 
       screen.window.setLeftNavButton(leftNavButton);
     }
   }
   if (OS_ANDROID) {
-    const displayHomeAsUp = (SCREEN.length > 1 || isCanClose) ? true : false;
     navBar = $.UI.create('ActionBar', {
       title,
-      onHomeIconItemSelected: onClickBack || closeWindow,
-      displayHomeAsUp,
-      homeButtonEnabled: (onClickBack || displayHomeAsUp) ? true : false
+      onHomeIconItemSelected: closeWindow,
+      displayHomeAsUp: true,
+      homeButtonEnabled: isCloseable ? true : false
     });
     screen.window.add(navBar);
   }
@@ -50,9 +49,7 @@ function addNavbar(screen, route) {
 function createWindow(name) {
   const route = STATE.routes[name];
 
-  SCREEN.push({});
-  const idx = SCREEN.length - 1;
-  const screen = SCREEN[idx];
+  const screen = {};
 
   const controllerOptions = {};
   _.extend(controllerOptions, route.options, navigationProps);
@@ -86,7 +83,6 @@ function createWindow(name) {
     console.log('window closed :', screen.window.title);
 
     if (screen.view) screen.view.fireEvent('close'); // close event for $.getView.addEventListener(...);
-    SCREEN.pop();
     screen.controller.destroy();
   });
 
@@ -94,45 +90,55 @@ function createWindow(name) {
 }
 
 function closeWindow() {
-  const idx = SCREEN.length - 1;
-  const screen = SCREEN[idx];
-  if (typeof screen !== 'object') return;
+  // fire close event to tabs
 
-  if (OS_IOS && idx === 0 && topWindow) {
-    topWindow.close();
-    topWindow = null;
-    return;
-  }
-
-  if (screen.window) screen.window.close();
+  tabGroup.close();
 }
 
-function openWindow(name) {
-  // open
-  const screen = createWindow(name);
+function setActiveTabByName(name) {
+  const tab = TAB[name];
+  if (!tab) return;
 
-  console.log('window open :', screen.window.title);
+  STATE.prevTabName = STATE.nowTabName;
+  STATE.nowTabName = name;
 
-  if (OS_IOS) {
-    if (!topWindow) topWindow = $.UI.create('NavigationWindow', {});
+  tabGroup.setActiveTab(tab.tab);
 
-    if (SCREEN.length === 1) {
-      topWindow.window = screen.window;
-      topWindow.open();
-    } else {
-      topWindow.openWindow(screen.window);
-    }
+  if (tab.view) tab.view.fireEvent('open'); // open event for $.getView.addEventListener(...);
+
+  if (STATE.prevTabName) {
+    const prevTab = TAB[STATE.prevTabName];
+    if (prevTab.view) prevTab.view.fireEvent('close'); // close event for $.getView.addEventListener(...);
   }
-  if (OS_ANDROID) {
-    screen.window.open();
+}
+
+function creatTabs() {
+  const tabs = Object.keys(STATE.routes).map((name) => {
+    const screen = createWindow(name);
+    screen.tab = $.UI.create('Tab', {
+      window: screen.window,
+      title: screen.navigationOptions.tabBarLabel || screen.navigationOptions.title
+    });
+    TAB[name] = screen;
+
+    return screen.tab;
+  });
+
+  return tabs;
+}
+
+function openTabGroup() {
+  if (!tabGroup) {
+    const tabs = creatTabs();
+    tabGroup = $.UI.create('TabGroup', { tabs });
   }
 
-  if (screen.view) screen.view.fireEvent('open'); // open event for $.getView.addEventListener(...);
+  tabGroup.open();
 }
 
 // exports
 exports.open = () => {
-  console.log('StackNavigator open');
+  console.log('TabNavigator open');
   const { initialRouteName = Object.keys(STATE.routes)[0], initialRouteParams } = STATE.config;
 
   const route = STATE.routes[initialRouteName];
@@ -141,12 +147,15 @@ exports.open = () => {
   _.extend(navigationOptions, route.navigationOptions, initialRouteParams);
   route.navigationOptions = navigationOptions;
 
-  openWindow(initialRouteName || Object.keys(STATE.routes)[0]);
+  openTabGroup();
+
+  setActiveTabByName(initialRouteName || Object.keys(STATE.routes)[0]);
 };
+
 exports.navigate = (name) => {
   console.log('navigate :', name);
   if (!name) return;
-  openWindow(name);
+  setActiveTabByName(name);
 };
 
 init(arguments[0]);

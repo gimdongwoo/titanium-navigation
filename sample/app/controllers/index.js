@@ -11,7 +11,7 @@ function openStackNavigator() {
     Profile: { controller: 'stack/profile' }
   }, {
     initialRouteName: 'Main',
-    initialRouteParams: { isCanClose: true }
+    initialRouteParams: { isCloseable: true }
   });
   StackWindow.open();
 }
@@ -26,7 +26,7 @@ function openTabNavigator() {
     Tab3: { controller: 'tab/tab3' }
   }, {
     initialRouteName: 'Tab1',
-    initialRouteParams: { isCanClose: true }
+    initialRouteParams: { isCloseable: true }
   });
   TabWindow.open();
 }
