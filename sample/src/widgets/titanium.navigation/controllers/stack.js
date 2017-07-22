@@ -20,18 +20,27 @@ function init({ routes, config }) {
 }
 
 function addNavbar(screen, route) {
-  const { title = '', onHomeIconItemSelected = closeWindow } = screen.navigationOptions;
+  const { title = '', isCanClose, onClickBack } = screen.navigationOptions;
   let navBar;
 
-  // if (OS_IOS) {
-  //   const leftNavButton = $.UI.create('Button', { title: 'Back' });
-  //   leftNavButton.addEventListener('click', onHomeIconItemSelected);
-  //
-  //   screen.window.setLeftNavButton(leftNavButton);
-  // }
+  if (OS_IOS) {
+    if (SCREEN.length > 1 || isCanClose) {
+      const leftNavButton = $.UI.create('Button', {
+        title: 'Back'
+      });
+      leftNavButton.addEventListener('click', onClickBack || closeWindow);
+
+      screen.window.setLeftNavButton(leftNavButton);
+    }
+  }
   if (OS_ANDROID) {
-    const displayHomeAsUp = (SCREEN.length === 1) ? false : true;
-    navBar = $.UI.create('ActionBar', { title, onHomeIconItemSelected, displayHomeAsUp });
+    const displayHomeAsUp = (SCREEN.length > 1 || isCanClose) ? true : false;
+    navBar = $.UI.create('ActionBar', {
+      title,
+      onHomeIconItemSelected: onClickBack || closeWindow,
+      displayHomeAsUp,
+      homeButtonEnabled: (onClickBack || displayHomeAsUp) ? true : false
+    });
     screen.window.add(navBar);
   }
 
@@ -124,7 +133,14 @@ function openWindow(name) {
 // exports
 exports.open = () => {
   console.log('StackNavigator open');
-  const { initialRouteName } = STATE.config;
+  const { initialRouteName = Object.keys(STATE.routes)[0], initialRouteParams } = STATE.config;
+
+  const route = STATE.routes[initialRouteName];
+
+  const navigationOptions = {};
+  _.extend(navigationOptions, route.navigationOptions, initialRouteParams);
+  route.navigationOptions = navigationOptions;
+
   openWindow(initialRouteName || Object.keys(STATE.routes)[0]);
 };
 exports.navigate = (name) => {

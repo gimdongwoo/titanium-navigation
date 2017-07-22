@@ -1,1 +1,10 @@
-<Alloy />
+<Alloy>
+    <Window id="index">
+        <TableView id="table" onClick="onClickTbl">
+            <TableViewSection id="Navigation" headerTitle="Navigation">
+                <TableViewRow title="StackNavigator"/>
+                <TableViewRow title="TabNavigator"/>
+            </TableViewSection>
+        </TableView>
+    </Window>
+</Alloy>
