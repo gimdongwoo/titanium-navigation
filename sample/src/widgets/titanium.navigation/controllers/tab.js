@@ -24,7 +24,7 @@ function addNavbar(screen, route) {
   let navBar;
 
   if (OS_IOS) {
-    if (isCanClose) {
+    if (SCREEN.length > 1 || isCanClose) {
       const leftNavButton = $.UI.create('Button', {
         title: 'Back'
       });

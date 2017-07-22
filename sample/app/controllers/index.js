@@ -6,14 +6,29 @@ function openStackNavigator() {
   var _Alloy$createWidget = Alloy.createWidget('titanium.navigation'),
       StackNavigator = _Alloy$createWidget.StackNavigator;
 
-  var BasicApp = StackNavigator({
-    Main: { controller: 'basic/main' },
-    Profile: { controller: 'basic/profile' }
+  var StackWindow = StackNavigator({
+    Main: { controller: 'stack/main' },
+    Profile: { controller: 'stack/profile' }
   }, {
     initialRouteName: 'Main',
     initialRouteParams: { isCanClose: true }
   });
-  BasicApp.open();
+  StackWindow.open();
+}
+
+function openTabNavigator() {
+  var _Alloy$createWidget2 = Alloy.createWidget('titanium.navigation'),
+      TabNavigator = _Alloy$createWidget2.TabNavigator;
+
+  var TabWindow = TabNavigator({
+    Tab1: { controller: 'tab/tab1' },
+    Tab2: { controller: 'tab/tab2' },
+    Tab3: { controller: 'tab/tab3' }
+  }, {
+    initialRouteName: 'Tab1',
+    initialRouteParams: { isCanClose: true }
+  });
+  TabWindow.open();
 }
 
 function onClickTbl(_ref) {
@@ -23,6 +38,10 @@ function onClickTbl(_ref) {
     case 'StackNavigator':
       {
         return openStackNavigator();
+      }
+    case 'TabNavigator':
+      {
+        return openTabNavigator();
       }
     default:
       {
