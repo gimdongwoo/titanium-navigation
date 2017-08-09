@@ -47,6 +47,8 @@ Install and add this component to your project using [gitt.io cli](http://gitt.i
 $ gittio install titanium.navigation
 ```
 
+Or take the widget from this repository and add it manually.
+
 ## Inspired by these
 
 [React Navigation](https://github.com/react-community/react-navigation) : We try to provide the same function as this. The code is completely different. We also refer to documents from this, but we expect to change gradually.
