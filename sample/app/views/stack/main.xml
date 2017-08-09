@@ -1,0 +1,8 @@
+<Alloy>
+  <View>
+    <View class="verticalView">
+      <Label class="label">Main Screen</Label>
+      <Button onClick="navigateProfile">Open Profile</Button>
+    </View>
+  </View>
+</Alloy>

@@ -1,0 +1,8 @@
+<Alloy>
+  <View>
+    <View class="verticalView">
+      <Label class="label">Profile Screen</Label>
+      <Button onClick="navigateBack">Go Back</Button>
+    </View>
+  </View>
+</Alloy>

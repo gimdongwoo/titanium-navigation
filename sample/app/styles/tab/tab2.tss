@@ -1,0 +1,12 @@
+".verticalView" : {
+  width: Ti.UI.SIZE,
+  height: Ti.UI.SIZE,
+  layout: "vertical"
+}
+
+".label": {
+  width: Ti.UI.SIZE,
+  height: Ti.UI.SIZE,
+  color: "#000",
+  font: { fontSize: 12 }
+}
