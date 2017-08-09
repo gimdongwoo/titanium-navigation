@@ -20,8 +20,8 @@ function init({ routes, config }) {
 }
 
 function addNavbar(screen, route) {
-  const { title = '', isCloseable, onClickBack } = screen.navigationOptions;
-  let navBar;
+  const { window = {}, navBar = {}, isCloseable, onClickBack } = screen.navigationOptions;
+  let _navBar;
 
   if (OS_IOS) {
     if (isCloseable) {
@@ -35,16 +35,16 @@ function addNavbar(screen, route) {
   }
   if (OS_ANDROID) {
     const displayHomeAsUp = (SCREEN.length > 1 || isCloseable) ? true : false;
-    navBar = $.UI.create('ActionBar', {
-      title,
+    _navBar = $.UI.create('ActionBar', _.extend(navBar, {
+      title: navBar.title || window.title || '',
       onHomeIconItemSelected: onClickBack || closeWindow,
       displayHomeAsUp,
       homeButtonEnabled: (onClickBack || displayHomeAsUp) ? true : false
-    });
+    }));
     screen.window.add(navBar);
   }
 
-  return navBar;
+  return _navBar;
 }
 
 function createWindow(name) {
@@ -61,19 +61,21 @@ function createWindow(name) {
   screen.navigationOptions = {};
   _.extend(screen.navigationOptions, route.navigationOptions, screen.controller.navigationOptions);
 
+  const { window = {}, navBar = {} } = screen.navigationOptions;
+
   const firstView = screen.controller.getView();
   if (typeof firstView.open === 'function') {
     // window
     screen.window = firstView;
   } else {
     // view
-    screen.window = $.UI.create('Window', {});
+    screen.window = $.UI.create('Window', window);
     screen.window.add(firstView);
     screen.view = firstView;
   }
 
   // set window properties
-  screen.window.setTitle(screen.navigationOptions.title || '');
+  screen.window.setTitle(window.title || navBar.title || '');
 
   // navBar
   const { navBarHidden = false } = screen.navigationOptions;

@@ -20,8 +20,8 @@ function init({ routes, config }) {
 }
 
 function addNavbar(screen, route) {
-  const { title = '', isCloseable } = screen.navigationOptions;
-  let navBar;
+  const { navBar = {}, window = {}, isCloseable } = screen.navigationOptions;
+  let _navBar;
 
   if (OS_IOS) {
     if (isCloseable) {
@@ -34,16 +34,16 @@ function addNavbar(screen, route) {
     }
   }
   if (OS_ANDROID) {
-    navBar = $.UI.create('ActionBar', {
-      title,
+    _navBar = $.UI.create('ActionBar', _.extend(navBar, {
+      title: navBar.title || window.title || '',
       onHomeIconItemSelected: closeWindow,
       displayHomeAsUp: true,
       homeButtonEnabled: isCloseable ? true : false
-    });
+    }));
     screen.window.add(navBar);
   }
 
-  return navBar;
+  return _navBar;
 }
 
 function createWindow(name) {
@@ -58,19 +58,21 @@ function createWindow(name) {
   screen.navigationOptions = {};
   _.extend(screen.navigationOptions, route.navigationOptions, screen.controller.navigationOptions);
 
+  const { window = {}, navBar = {} } = screen.navigationOptions;
+
   const firstView = screen.controller.getView();
   if (typeof firstView.open === 'function') {
     // window
     screen.window = firstView;
   } else {
     // view
-    screen.window = $.UI.create('Window', {});
+    screen.window = $.UI.create('Window', window);
     screen.window.add(firstView);
     screen.view = firstView;
   }
 
   // set window properties
-  screen.window.setTitle(screen.navigationOptions.title || '');
+  screen.window.setTitle(window.title || navBar.title || '');
 
   // navBar
   const { navBarHidden = false } = screen.navigationOptions;
@@ -115,10 +117,12 @@ function setActiveTabByName(name) {
 function creatTabs() {
   const tabs = Object.keys(STATE.routes).map((name) => {
     const screen = createWindow(name);
-    screen.tab = $.UI.create('Tab', {
+    const { window = {}, tab = {} } = screen.navigationOptions;
+    screen.tab = $.UI.create('Tab', _.extend(tab, {
       window: screen.window,
-      title: screen.navigationOptions.tabBarLabel || screen.navigationOptions.title
-    });
+      title: tab.title || window.title || '',
+      icon: tab.icon || '',
+    }));
     TAB[name] = screen;
 
     return screen.tab;

@@ -16,6 +16,14 @@ function navigateTab3() {
 }
 
 exports.navigationOptions = {
-  title: 'Tab2',
-  tabBarLabel: 'tab2',
+  window: {
+    title: 'Tab2'
+  },
+  navBar: {
+    title: 'Tab2'
+  },
+  tab: {
+    title: 'Tab2',
+    icon: ''
+  }
 };

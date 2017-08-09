@@ -6,5 +6,10 @@ function navigateProfile() {
 }
 
 exports.navigationOptions = {
-  title: 'Main'
+  window: {
+    title: 'Main'
+  },
+  navBar: {
+    title: 'Main'
+  }
 };

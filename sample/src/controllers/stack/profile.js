@@ -6,5 +6,10 @@ function navigateBack() {
 }
 
 exports.navigationOptions = {
-  title: 'Profile'
+  window: {
+    title: 'Profile'
+  },
+  navBar: {
+    title: 'Profile'
+  }
 };
