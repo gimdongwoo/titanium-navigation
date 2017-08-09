@@ -24,6 +24,6 @@ exports.navigationOptions = {
   },
   tab: {
     title: 'Tab1',
-    icon: ''
+    icon: '/images/tap_nav_newsfeed_selected.png',
   }
 };

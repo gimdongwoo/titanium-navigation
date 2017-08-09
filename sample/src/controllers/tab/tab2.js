@@ -24,6 +24,6 @@ exports.navigationOptions = {
   },
   tab: {
     title: 'Tab2',
-    icon: ''
+    icon: '/images/tap_nav_alram_selected.png',
   }
 };

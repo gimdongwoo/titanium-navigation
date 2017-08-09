@@ -24,6 +24,6 @@ exports.navigationOptions = {
   },
   tab: {
     title: 'Tab3',
-    icon: ''
+    icon: '/images/tap_nav_more_selected.png',
   }
 };

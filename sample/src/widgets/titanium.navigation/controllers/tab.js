@@ -121,7 +121,7 @@ function creatTabs() {
     screen.tab = $.UI.create('Tab', _.extend(tab, {
       window: screen.window,
       title: tab.title || window.title || '',
-      icon: tab.icon || '',
+      icon: tab.icon || null,
     }));
     TAB[name] = screen;
 
