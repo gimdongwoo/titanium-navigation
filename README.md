@@ -47,7 +47,7 @@ Install and add this component to your project using [gitt.io cli](http://gitt.i
 $ gittio install titanium.navigation
 ```
 
-Or take the widget from this repository and add it manually.
+Or take [the widget from this repository](https://github.com/gimdongwoo/titanium-navigation/releases) and add it to your project manually.
 
 ## Inspired by these
 
