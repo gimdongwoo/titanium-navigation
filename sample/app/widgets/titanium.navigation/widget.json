@@ -1,13 +1,13 @@
 {
   "id": "titanium.navigation",
   "name": "titanium.navigation",
-  "description" : "",
-  "author": "",
-  "version": "1.0",
+  "description" : "Titanium Navigation allows you to define navigation structures for Titanium applications. It also renders common elements such as navbar(=actionbar) and tab bar.",
+  "author": "Dongwoo Gim <gimdongwoo@gmail.com>",
+  "version": "1.0.1",
   "copyright":"Copyright (c) 2017",
   "license":"Public Domain",
-  "min-alloy-version": "1.0",
-  "min-titanium-version":"5.0.0.GA",
-  "tags":"",
+  "min-alloy-version": "1.9",
+  "min-titanium-version":"6.0.0.GA",
+  "tags":"navigation,stack,tab,drawer,window",
   "platforms":"android,ios"
 }
