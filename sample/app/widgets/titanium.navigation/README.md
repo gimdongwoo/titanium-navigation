@@ -7,17 +7,17 @@ It also renders common elements such as navbar(=actionbar) and tab bar.
 
 It includes the following functions to help you create navigations:
 
-- [StackNavigation](https://github.com/gimdongwoo/titanium-navigation/docs/navigation/StackNavigation.md) - Renders one screen at a time and provides transitions between screens. When a new screen is opened it is placed on top of the stack.
-- [TabNavigation](https://github.com/gimdongwoo/titanium-navigation/docs/navigation/TabNavigation.md) - Renders a tab bar that lets the user switch between several screens. It use Titanium `TabGroup` and `Tab`.
-- [DrawerNavigation](https://github.com/gimdongwoo/titanium-navigation/docs/navigation/DrawerNavigation.md) - Provides a drawer that slides in from the left or right of the screen.
+- [StackNavigation](https://github.com/gimdongwoo/titanium-navigation/blob/master/docs/navigation/StackNavigation.md) - Renders one screen at a time and provides transitions between screens. When a new screen is opened it is placed on top of the stack.
+- [TabNavigation](https://github.com/gimdongwoo/titanium-navigation/blob/master/docs/navigation/TabNavigation.md) - Renders a tab bar that lets the user switch between several screens. It use Titanium `TabGroup` and `Tab`.
+- [DrawerNavigation](https://github.com/gimdongwoo/titanium-navigation/blob/master/docs/navigation/DrawerNavigation.md) - Provides a drawer that slides in from the left or right of the screen.
 
 ## Controllers with Navigation
 
 The navigations render views from controllers.
 To learn how to create views, read about:
 
-- [navigation](https://github.com/gimdongwoo/titanium-navigation/docs/common/navigation.md) : Controller `arguments[0].navigation` to allow the screen to call navigation actions, such as opening another screen
-- [navigationOptions](https://github.com/gimdongwoo/titanium-navigation/docs/common/navigationOptions.md) : Controller's `exports.navigationOptions` to customize how the screen gets presented by the navigation (e.g. navBar title, tab label)
+- [navigation](https://github.com/gimdongwoo/titanium-navigation/blob/master/docs/common/navigation.md) : Controller `arguments[0].navigation` to allow the screen to call navigation actions, such as opening another screen
+- [navigationOptions](https://github.com/gimdongwoo/titanium-navigation/blob/master/docs/common/navigationOptions.md) : Controller's `exports.navigationOptions` to customize how the screen gets presented by the navigation (e.g. navBar title, tab label)
 
 ### Calling Navigation on Controller
 
